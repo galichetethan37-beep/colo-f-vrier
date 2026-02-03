@@ -103,6 +103,8 @@ const form = document.getElementById("bookingForm");
 const formMessage = document.getElementById("formMessage");
 const heroTitle = document.getElementById("heroTitle");
 const enableNotifications = document.getElementById("enableNotifications");
+const bookingLinkInput = document.getElementById("bookingLink");
+const copyBookingLink = document.getElementById("copyBookingLink");
 
 const scrollTo = (targetId) => {
   const el = document.getElementById(targetId);
@@ -299,3 +301,28 @@ buildTitleAnimation();
 buildProgramCards();
 buildDateOptions();
 registerServiceWorker();
+
+const createBookingLink = () => {
+  const baseUrl =
+    window.location.origin && window.location.origin !== "null"
+      ? `${window.location.origin}${window.location.pathname.replace(/index\\.html$/, "")}`
+      : window.location.href.split("#")[0];
+  const link = `${baseUrl}#reservation`;
+  if (bookingLinkInput) {
+    bookingLinkInput.value = link;
+  }
+};
+
+copyBookingLink?.addEventListener("click", async () => {
+  if (!bookingLinkInput?.value) {
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(bookingLinkInput.value);
+    showMessage("Lien copié ✅");
+  } catch (error) {
+    showMessage("Impossible de copier le lien.", true);
+  }
+});
+
+createBookingLink();
