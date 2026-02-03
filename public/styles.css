@@ -293,6 +293,20 @@ button:hover {
   gap: 0.8rem;
 }
 
+.booking-link__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 200px;
+  flex: 1;
+}
+
+.booking-link__field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+}
+
 .booking-link__actions input {
   min-width: 220px;
   flex: 1;

@@ -69,7 +69,19 @@
               <p>Partagez ce lien pour accéder directement au formulaire.</p>
             </div>
             <div class="booking-link__actions">
-              <input type="text" id="bookingLink" readonly aria-label="Lien de réservation" />
+              <div class="booking-link__field">
+                <label for="bookingSlug">Nom dans le lien</label>
+                <input
+                  type="text"
+                  id="bookingSlug"
+                  placeholder="ex: famille-dupont"
+                  aria-label="Nom dans le lien"
+                />
+              </div>
+              <div class="booking-link__field">
+                <label for="bookingLink">Lien de réservation</label>
+                <input type="text" id="bookingLink" readonly aria-label="Lien de réservation" />
+              </div>
               <button type="button" class="secondary" id="copyBookingLink">Copier le lien</button>
             </div>
           </div>

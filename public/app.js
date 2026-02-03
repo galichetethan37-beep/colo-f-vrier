@@ -105,6 +105,7 @@ const heroTitle = document.getElementById("heroTitle");
 const enableNotifications = document.getElementById("enableNotifications");
 const bookingLinkInput = document.getElementById("bookingLink");
 const copyBookingLink = document.getElementById("copyBookingLink");
+const bookingSlugInput = document.getElementById("bookingSlug");
 
 const scrollTo = (targetId) => {
   const el = document.getElementById(targetId);
@@ -292,6 +293,10 @@ form.addEventListener("submit", async (event) => {
 
     showMessage("✅ Réservation envoyée avec succès");
     form.reset();
+    if (bookingSlugInput) {
+      bookingSlugInput.value = "";
+    }
+    createBookingLink();
   } catch (error) {
     showMessage("Une erreur est survenue. Réessayez.", true);
   }
@@ -302,14 +307,37 @@ buildProgramCards();
 buildDateOptions();
 registerServiceWorker();
 
+const slugify = (value) =>
+  value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+
 const createBookingLink = () => {
-  const baseUrl =
+  const rawBase =
     window.location.origin && window.location.origin !== "null"
       ? `${window.location.origin}${window.location.pathname.replace(/index\\.html$/, "")}`
       : window.location.href.split("#")[0];
-  const link = `${baseUrl}#reservation`;
+  const baseUrl = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+  const slug = bookingSlugInput?.value ? slugify(bookingSlugInput.value) : "";
+  const slugSegment = slug ? `${slug}/` : "";
+  const link = `${baseUrl}${slugSegment}#reservation`;
   if (bookingLinkInput) {
     bookingLinkInput.value = link;
+  }
+};
+
+const updateSlugFromNames = () => {
+  const firstName = form.querySelector("input[name='childFirstName']")?.value ?? "";
+  const lastName = form.querySelector("input[name='childLastName']")?.value ?? "";
+  if (bookingSlugInput && !bookingSlugInput.value.trim()) {
+    const combined = `${firstName} ${lastName}`.trim();
+    if (combined) {
+      bookingSlugInput.value = slugify(combined);
+    }
   }
 };
 
@@ -323,6 +351,21 @@ copyBookingLink?.addEventListener("click", async () => {
   } catch (error) {
     showMessage("Impossible de copier le lien.", true);
   }
+});
+
+bookingSlugInput?.addEventListener("input", () => {
+  bookingSlugInput.value = slugify(bookingSlugInput.value);
+  createBookingLink();
+});
+
+form.querySelector("input[name='childFirstName']")?.addEventListener("input", () => {
+  updateSlugFromNames();
+  createBookingLink();
+});
+
+form.querySelector("input[name='childLastName']")?.addEventListener("input", () => {
+  updateSlugFromNames();
+  createBookingLink();
 });
 
 createBookingLink();
