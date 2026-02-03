@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colo Vacances de Février</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="hero__nav">
+        <span class="logo">❄️ Colo Février 2026</span>
+        <button class="ghost" id="enableNotifications">Activer les notifications</button>
+      </nav>
+      <div class="hero__content">
+        <div class="hero__title-wrap">
+          <h1 id="heroTitle">Colo Vacances de Février</h1>
+          <p class="hero__subtitle">
+            Une colonie gratuite, créative et joyeuse avec des activités chaque jour.
+          </p>
+          <div class="hero__actions">
+            <button class="primary" id="scrollToBooking">Réserver gratuitement</button>
+            <button class="secondary" id="scrollToProgram">Voir le programme</button>
+          </div>
+        </div>
+        <div class="hero__scene" aria-hidden="true">
+          <div class="sky"></div>
+          <div class="mountains"></div>
+          <div class="skiers">
+            <div class="skier skier--one">⛷️</div>
+            <div class="skier skier--two">🏂</div>
+            <div class="skier skier--three">⛷️</div>
+          </div>
+        </div>
+      </div>
+      <button class="scroll-indicator" id="scrollToMain" aria-label="Descendre vers le contenu">
+        ↓
+      </button>
+    </header>
+
+    <main id="mainContent">
+      <section class="section program" id="programme">
+        <div class="section__header">
+          <h2>Programme des vacances</h2>
+          <p>
+            Cliquez sur chaque activité pour découvrir la mini-fiche, sa durée et une description.
+          </p>
+        </div>
+        <div class="program__grid" id="programGrid" role="list"></div>
+      </section>
+
+      <section class="section booking" id="reservation">
+        <div class="section__header">
+          <h2>Réservation gratuite</h2>
+          <p>
+            Remplissez le formulaire pour réserver une place. Une notification sera envoyée à chaque réservation.
+          </p>
+        </div>
+        <form id="bookingForm" class="booking__form">
+          <div class="form__grid">
+            <label>
+              Nom de l'enfant
+              <input type="text" name="childLastName" required autocomplete="family-name" />
+            </label>
+            <label>
+              Prénom
+              <input type="text" name="childFirstName" required autocomplete="given-name" />
+            </label>
+            <label>
+              Âge
+              <input type="number" name="age" min="6" max="17" required />
+            </label>
+            <label>
+              Nom du responsable légal
+              <input type="text" name="guardianName" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+            <label>
+              Téléphone
+              <input type="tel" name="phone" required autocomplete="tel" />
+            </label>
+          </div>
+
+          <fieldset class="dates">
+            <legend>Dates sélectionnées</legend>
+            <div class="dates__grid" id="datesGrid"></div>
+          </fieldset>
+
+          <button type="submit" class="primary">Réserver gratuitement</button>
+          <div class="form__message" id="formMessage" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Colo Vacances de Février 2026 · Réservation gratuite · Ambiance hivernale ✨</p>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
